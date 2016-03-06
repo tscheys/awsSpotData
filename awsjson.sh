@@ -6,17 +6,19 @@ declare -a zones=("us-west-2" "us-west-1" "eu-west-1" "eu-central-1" "ap-southea
 instancelength=${#instances[@]}
 zonelength=${#zones[@]}
 
-mkdir AWSdata
-cd AWSdata
 # use for loop to read all values and indexes
 for (( j=1; j<${zonelength}+1; j++ ));
 do
   aws configure set default.region ${zones[$j-1]}
-  mkdir ${zones[$j-1]}
-  temp=""
   for (( i=1; i<${instancelength}+1; i++ ));
   do
-    aws ec2 describe-spot-price-history --instance-types ${array[$i-1]} 
-    temp=${filenames[$i-1]}
-  done > ${zones[$j-1]}/temp.json
+    aws ec2 describe-spot-price-history --instance-types ${instances[$i-1]}
+  done >> aws${zones[$j-1]}.json
 done
+
+
+# > ${zones[$j-1]}/${temp}.json
+control_c() {
+    kill $PID
+    exit
+}
