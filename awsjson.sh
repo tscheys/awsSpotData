@@ -7,6 +7,20 @@ declare -a zones=("us-west-2" "us-west-1")
 instancelength=${#instances[@]}
 zonelength=${#zones[@]}
 
+# get date 90 days ago 
+#90dayInteger=$(date -j -v-90d +"%s")
+#90dayYear=$(date -j -v-90d +"%Y")
+#90dayMonth=$(date -j -v-90d +"%m")
+#90dayDay=$(date -j -v-90d +"%d")
+
+declare -a dates=() 
+
+#create arrays 
+for ((days=89; days>0; days--));
+do
+  dates+=($(date -j -v-${days}d +%Y-%m-%d))
+done
+
 # loop through zones
 for (( j=1; j<${zonelength}+1; j++ ));
 do
@@ -27,3 +41,8 @@ control_c() {
     kill $PID
     exit
 }
+
+# get current date
+# subtract 90 days 
+# do api call for all those days 
+# so increment by one 
