@@ -1,7 +1,7 @@
 #declare instance types and zones to extract
-declare -a instances=("m1.small"  "m3.medium")
-declare -a filenames=("m1small" "m3medium")
-declare -a zones=("us-west-2" "us-west-1")
+declare -a instances=("m3.medium")
+declare -a filenames=("m3medium")
+declare -a zones=("eu-west-1")
 declare -a dates=() 
 #create array of past 90 days 
 for ((days=89; days>0; days--));
@@ -24,11 +24,11 @@ do
     #loop over past 90 days 
     for ((k=1; k<${dateslength}+1; k++));
     do
-    # extract data in json format of current region, instance in loop
-    # use jq to make json compact, to be usable later in apache spark 
-    aws ec2 describe-spot-price-history --instance-types ${instances[$i-1]} --product-description "Linux/UNIX" --start-time ${dates[$k-1]}T00:00:00.000Z --end-time ${dates[$k-1]}T23:59:59.000Z | jq -c ".SpotPriceHistory[]"
-    # append data to outputted json file
-    done >> aws2.json
+      # extract data in json format of current region, instance in loop
+      # use jq to make json compact, to be usable later in apache spark 
+      aws ec2 describe-spot-price-history --instance-types ${instances[$i-1]} --product-description "Linux/UNIX" --start-time ${dates[$k-1]}T00:00:00.000Z --end-time ${dates[$k-1]}T23:59:59.000Z | jq -c ".SpotPriceHistory[]"
+      # append data to outputted json file
+    done >> aws.json
   done
 done
 
