@@ -1,7 +1,6 @@
 #declare instance types and zones to extract
-declare -a instances=("m3.medium")
-declare -a filenames=("m3medium")
-declare -a zones=("eu-west-1")
+declare -a instances=("m1.medium" "c3.large" "g2.2xlarge")
+declare -a zones=("eu-west-1" "us-west-2" "ap-southeast-1")
 declare -a dates=() 
 #create array of past 90 days 
 for ((days=89; days>0; days--));
